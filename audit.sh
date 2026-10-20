@@ -13,3 +13,4 @@ source "$SCRIPT_DIR/checks/ssh.sh"
 
 echo "=== Linux Compliance Audit ==="
 check_ssh_root_login
+check_ssh_empty_passwords
