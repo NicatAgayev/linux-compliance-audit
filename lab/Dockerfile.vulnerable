@@ -1,0 +1,37 @@
+# =============================================================
+# INTENTIONALLY VULNERABLE TEST ENVIRONMENT
+# Purpose: target system for testing the compliance audit tool.
+# WARNING: Do NOT use this image in production or expose it
+# to any network.
+# =============================================================
+
+# Base image: clean Ubuntu 24.04
+FROM ubuntu:24.04
+
+# Required packages: SSH server and sudo
+RUN apt-get update && \
+    apt-get install -y openssh-server sudo && \
+    rm -rf /var/lib/apt/lists/*
+
+# MISCONFIG 1: Direct root login over SSH is allowed
+RUN sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# MISCONFIG 2: SSH accepts empty passwords
+RUN sed -i 's/^#\?PermitEmptyPasswords.*/PermitEmptyPasswords yes/' /etc/ssh/sshd_config
+
+# MISCONFIG 3: User account with no password
+RUN useradd -m -s /bin/bash testuser && passwd -d testuser
+
+# MISCONFIG 4: Password hash file is world-readable
+RUN chmod 644 /etc/shadow
+
+# MISCONFIG 5: Hidden account with UID 0 (root privileges)
+RUN useradd -o -u 0 -g 0 -M -s /bin/bash backdoor
+
+# MISCONFIG 6: Full sudo rights without password prompt
+RUN useradd -m -s /bin/bash devops && \
+    echo "devops ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/devops && \
+    chmod 440 /etc/sudoers.d/devops
+
+# Keep the container running
+CMD ["sleep", "infinity"]
