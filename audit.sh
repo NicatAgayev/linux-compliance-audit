@@ -10,7 +10,10 @@ report() {
 }
 
 source "$SCRIPT_DIR/checks/ssh.sh"
+source "$SCRIPT_DIR/checks/accounts.sh"
 
 echo "=== Linux Compliance Audit ==="
 check_ssh_root_login
 check_ssh_empty_passwords
+check_empty_password_accounts
+check_uid_zero_accounts
