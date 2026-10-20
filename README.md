@@ -9,12 +9,13 @@ with risk ratings and evidence for every finding.
 
 ## Why I built this
 
-I come from a GRC background, where controls are usually assessed through
-policies, interviews and documents. After completing the Bash scripting
-module on Hack The Box Academy, I wanted to understand what these controls
-look like on a real system: how a requirement such as "privileged access
-must be restricted" is actually verified, and what evidence an auditor can
-collect. This project bridges those two worlds.
+ After completing the Bash Scripting module in the Security Analyst path
+ on Hack The Box Academy, I wanted to build a small automation tool with
+ the help of AI. The tool detects security misconfigurations that were
+ intentionally introduced into a lab environment. I then performed risk
+ mapping for the identified weaknesses and evaluated them against
+ ISO/IEC 27001 Annex A and NIST SP 800-53. This allowed me to develop my
+ GRC skills while working on a hands-on technical project.
 
 ## What it does
 
